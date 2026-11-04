@@ -23,7 +23,7 @@ static func validate(challenge: MathChallenge, raw: Variant) -> Dictionary:
 
 ## Retorna float ou null.
 static func parse_number(text: String) -> Variant:
-	var t := text.strip_edges().replace("R$", "").replace(" ", "").replace(",", ".")
+	var t := text.strip_edges().replace("R$", "").replace("%", "").replace(" ", "").replace(",", ".")
 	if t.is_valid_float():
 		return t.to_float()
 	return null

@@ -28,12 +28,12 @@ func _add_ingredient(id: String, nm: String, unit: Units.Unit, pack_size: int, c
 
 func _build_ingredients() -> void:
 	_add_ingredient("farinha", "Farinha", Units.Unit.G, 1000, 600, "Secos", 5000, 300)
-	_add_ingredient("acucar", "Açúcar", Units.Unit.G, 1000, 450, "Secos", 5000, 300)
+	_add_ingredient("acucar", "Açúcar", Units.Unit.G, 1000, 550, "Secos", 5000, 300)
 	_add_ingredient("macarrao", "Macarrão", Units.Unit.G, 500, 600, "Secos", 3000, 250)
 	_add_ingredient("molho_tomate", "Molho de tomate", Units.Unit.G, 500, 700, "Molhos", 3000, 200)
-	_add_ingredient("queijo", "Queijo", Units.Unit.G, 500, 1800, "Laticínios", 2000, 150)
-	_add_ingredient("leite", "Leite", Units.Unit.ML, 1000, 500, "Laticínios", 5000, 300)
-	_add_ingredient("ovo", "Ovos", Units.Unit.UN, 12, 900, "Frescos", 36, 4)
+	_add_ingredient("queijo", "Queijo", Units.Unit.G, 500, 2200, "Laticínios", 2000, 150)
+	_add_ingredient("leite", "Leite", Units.Unit.ML, 1000, 550, "Laticínios", 5000, 300)
+	_add_ingredient("ovo", "Ovos", Units.Unit.UN, 12, 1200, "Frescos", 36, 4)
 
 # -------------------------------------------------------------------- receitas
 func _add_recipe(id: String, nm: String, desc: String, base: int, price: int,
@@ -50,32 +50,32 @@ func _add_recipe(id: String, nm: String, desc: String, base: int, price: int,
 	return r
 
 func _build_recipes() -> void:
-	_add_recipe("bolo", "Bolo da Vovó", "Bolo simples e fofinho, clássico da casa.", 4, 800,
+	_add_recipe("bolo", "Bolo da Vovó", "Bolo simples e fofinho, clássico da casa.", 4, 500,
 		["Separar os ingredientes", "Misturar a massa", "Assar no forno", "Finalizar", "Servir"]) \
 		.add_line("farinha", 200, Units.Unit.G) \
 		.add_line("ovo", 2, Units.Unit.UN) \
 		.add_line("leite", 100, Units.Unit.ML) \
 		.add_line("acucar", 150, Units.Unit.G)
 
-	_add_recipe("lasanha", "Lasanha de Forno", "Massa em camadas com molho e queijo gratinado.", 4, 1500,
+	_add_recipe("lasanha", "Lasanha de Forno", "Massa em camadas com molho e queijo gratinado.", 4, 900,
 		["Separar os ingredientes", "Montar as camadas", "Assar no forno", "Finalizar", "Servir"]) \
 		.add_line("macarrao", 250, Units.Unit.G) \
 		.add_line("molho_tomate", 200, Units.Unit.G) \
 		.add_line("queijo", 150, Units.Unit.G, true)   # página manchada: dado ilegível
 
-	_add_recipe("macarrao_ao_molho", "Macarrão ao Molho", "Massa cozida na panela com molho de tomate.", 2, 1000,
+	_add_recipe("macarrao_ao_molho", "Macarrão ao Molho", "Massa cozida na panela com molho de tomate.", 2, 600,
 		["Separar os ingredientes", "Cozinhar a massa", "Aquecer o molho", "Misturar", "Servir"]) \
 		.add_line("macarrao", 200, Units.Unit.G) \
-		.add_line("molho_tomate", 150, Units.Unit.G) \
+		.add_line("molho_tomate", 150, Units.Unit.G, true) \
 		.add_line("queijo", 40, Units.Unit.G)
 
-	_add_recipe("panqueca", "Panqueca Recheada", "Massa fina feita na frigideira e enrolada com recheio.", 2, 700,
+	_add_recipe("panqueca", "Panqueca Recheada", "Massa fina feita na frigideira e enrolada com recheio.", 2, 450,
 		["Separar os ingredientes", "Misturar a massa", "Fritar na frigideira", "Rechear e enrolar", "Servir"]) \
 		.add_line("farinha", 100, Units.Unit.G) \
 		.add_line("ovo", 1, Units.Unit.UN) \
-		.add_line("leite", 200, Units.Unit.ML)
+		.add_line("leite", 200, Units.Unit.ML, true)
 
-	_add_recipe("pudim_verine", "Pudim do Verine", "Receita antiga do avô, página parcialmente apagada.", 4, 1800,
+	_add_recipe("pudim_verine", "Pudim do Verine", "Receita antiga do avô, página parcialmente apagada.", 4, 900,
 		["Separar os ingredientes", "Fazer a calda", "Bater a mistura", "Assar em banho-maria", "Servir"], false) \
 		.add_line("leite", 500, Units.Unit.ML) \
 		.add_line("ovo", 3, Units.Unit.UN) \
@@ -122,6 +122,7 @@ func _build_challenges() -> void:
 	c.tolerance = 0.01
 	c.hint = "4 porções é o dobro de 2 porções."
 	c.success_feedback = "Dado recuperado! O livro de receitas foi atualizado."
+	c.tier = 1
 	c.consequence = {"type": "recover_line", "recipe_id": "lasanha", "ingredient_id": "queijo", "amount": 150.0}
 	challenges[c.id] = c
 	recipes["lasanha"].challenge_ids.append(c.id)
@@ -136,9 +137,41 @@ func _build_challenges() -> void:
 	d.expected = 200
 	d.hint = "Calcule 500 ÷ 5 e depois multiplique por 2."
 	d.success_feedback = "Dado recuperado! Mais uma página do livro foi restaurada."
+	d.tier = 2
 	d.consequence = {"type": "recover_line", "recipe_id": "pudim_verine", "ingredient_id": "acucar", "amount": 200.0}
 	challenges[d.id] = d
 	recipes["pudim_verine"].challenge_ids.append(d.id)
+
+	# Recuperação: molho do macarrão (porcentagem) — nível 2.
+	var e := MathChallenge.new()
+	e.id = "rec_macarrao_molho"
+	e.tier = 2
+	e.topic = "Porcentagem"
+	e.type = MathChallenge.Type.DECIMAL
+	e.operation = "Porcentagem de uma quantidade"
+	e.statement = "A quantidade de molho do Macarrão ao Molho (receita para 2 porções) está borrada.\nA nota do vovô diz: \"o molho pesa 75% do peso do macarrão\".\nA receita usa 200 g de macarrão. Quantos gramas de molho ela pede?"
+	e.expected = 150.0
+	e.tolerance = 0.01
+	e.hint = "75% = 75/100. Calcule 200 × 0,75."
+	e.success_feedback = "Dado recuperado! A página do macarrão está legível de novo."
+	e.consequence = {"type": "recover_line", "recipe_id": "macarrao_ao_molho", "ingredient_id": "molho_tomate", "amount": 150.0}
+	challenges[e.id] = e
+	recipes["macarrao_ao_molho"].challenge_ids.append(e.id)
+
+	# Recuperação: leite da panqueca (equação do 1º grau) — nível 3.
+	var f := MathChallenge.new()
+	f.id = "rec_panqueca_leite"
+	f.tier = 3
+	f.topic = "Equação do 1º grau"
+	f.type = MathChallenge.Type.INTEGER
+	f.operation = "Resolução de equação do 1º grau"
+	f.statement = "A quantidade de leite da Panqueca Recheada (receita para 2 porções) sumiu da página.\nA nota diz: \"leite + farinha = 300\" (considere 1 ml = 1 g).\nA receita usa 100 g de farinha. Quantos ml de leite ela pede? (resolva x + 100 = 300)"
+	f.expected = 200
+	f.hint = "Isole o x: subtraia 100 dos dois lados da equação."
+	f.success_feedback = "Dado recuperado! A página da panqueca está legível de novo."
+	f.consequence = {"type": "recover_line", "recipe_id": "panqueca", "ingredient_id": "leite", "amount": 200.0}
+	challenges[f.id] = f
+	recipes["panqueca"].challenge_ids.append(f.id)
 
 ## Devolve uma cópia nova do desafio de recuperação da linha, ou null.
 func make_recovery_challenge(recipe: Recipe, ingredient_id: String) -> MathChallenge:
@@ -150,13 +183,13 @@ func make_recovery_challenge(recipe: Recipe, ingredient_id: String) -> MathChall
 
 # ------------------------------------------------------------------- melhorias
 func _build_upgrades() -> void:
-	_add_upgrade(Upgrade.new("u_despensa", "Despensa maior", "+50% de capacidade de estoque.", 4000,
+	_add_upgrade(Upgrade.new("u_despensa", "Despensa maior", "+50% de capacidade de estoque.", 3000,
 		{"type": "storage_percent", "value": 50.0}))
-	_add_upgrade(Upgrade.new("u_fornecedor", "Fornecedor parceiro", "10% de desconto em todas as compras.", 3000,
+	_add_upgrade(Upgrade.new("u_fornecedor", "Fornecedor parceiro", "10% de desconto em todas as compras.", 2500,
 		{"type": "purchase_discount_percent", "value": 10.0}))
-	_add_upgrade(Upgrade.new("u_cartaz", "Cartaz na calçada", "+10% no valor dos atendimentos.", 2500,
+	_add_upgrade(Upgrade.new("u_cartaz", "Cartaz na calçada", "+10% no valor dos atendimentos.", 2000,
 		{"type": "price_bonus_percent", "value": 10.0}))
-	_add_upgrade(Upgrade.new("u_vitrine", "Vitrine renovada", "+15% no valor dos atendimentos.", 6000,
+	_add_upgrade(Upgrade.new("u_vitrine", "Vitrine renovada", "+15% no valor dos atendimentos.", 4500,
 		{"type": "price_bonus_percent", "value": 15.0}, ["u_cartaz"]))
 
 func _add_upgrade(u: Upgrade) -> void:
@@ -164,32 +197,58 @@ func _add_upgrade(u: Upgrade) -> void:
 
 # --------------------------------------------------------------------- pedidos
 ## kind: Order.Kind. "tutorial" aparece só no primeiro atendimento.
+## min_completed define quando o pedido pode aparecer (nível 1: 0-2, nível 2: 3-5, nível 3: 6+).
+func _add_order(tpl: Dictionary) -> void:
+	order_templates.append(tpl)
+
 func _build_orders() -> void:
-	order_templates.append({"tutorial": true, "customer": "Dona Maria", "kind": Order.Kind.DIRECT,
+	# --- Nível 1 ---
+	_add_order({"tutorial": true, "customer": "Dona Maria", "kind": Order.Kind.DIRECT,
 		"text": "Bom dia! Quero um Bolo da Vovó, por favor. Para 4 pessoas.",
 		"recipe_id": "bolo", "servings": 4})
-	order_templates.append({"customer": "João", "kind": Order.Kind.DESCRIPTIVE, "min_completed": 1,
+	_add_order({"customer": "João", "kind": Order.Kind.DESCRIPTIVE, "min_completed": 1,
 		"text": "Estou com vontade de uma massa assada, com molho de tomate e queijo derretido por cima. Para 4, por favor.",
 		"recipe_id": "lasanha", "servings": 4,
 		"clues": ["c_massa_assada", "c_molho_tomate", "c_queijo_gratinado"], "hidden_clues": ["c_camadas"]})
-	order_templates.append({"customer": "Dona Rosa", "kind": Order.Kind.DESCRIPTIVE, "min_completed": 1,
-		"text": "Quero uma massa fininha, enrolada com recheio. Para 2 pessoas.",
-		"recipe_id": "panqueca", "servings": 2,
-		"clues": ["c_massa_fina", "c_recheio"], "hidden_clues": ["c_frigideira"]})
-	order_templates.append({"customer": "Seu Carlos", "kind": Order.Kind.DIRECT, "min_completed": 1,
-		"text": "Um Macarrão ao Molho para 6 pessoas. Vim com a família toda!",
-		"recipe_id": "macarrao_ao_molho", "servings": 6})
-	order_templates.append({"customer": "Bia", "kind": Order.Kind.DIRECT, "min_completed": 1,
+	_add_order({"customer": "Marta", "kind": Order.Kind.DIRECT, "min_completed": 1,
+		"text": "Um Bolo da Vovó para 2 pessoas, por favor.",
+		"recipe_id": "bolo", "servings": 2})
+	_add_order({"customer": "Pedro", "kind": Order.Kind.DESCRIPTIVE, "min_completed": 1,
+		"text": "Quero algo de massa assada, em camadas, com molho de tomate. Só para 2.",
+		"recipe_id": "lasanha", "servings": 2,
+		"clues": ["c_massa_assada", "c_molho_tomate"], "hidden_clues": ["c_queijo_gratinado"]})
+	_add_order({"customer": "Bia", "kind": Order.Kind.DIRECT, "min_completed": 1,
 		"text": "Um Bolo da Vovó para 6 pessoas, por favor.",
 		"recipe_id": "bolo", "servings": 6})
-	order_templates.append({"customer": "Dona Lúcia", "kind": Order.Kind.ENIGMATIC, "min_completed": 2,
+	# --- Nível 2 ---
+	_add_order({"customer": "Seu Carlos", "kind": Order.Kind.DIRECT, "min_completed": 3,
+		"text": "Um Macarrão ao Molho para 6 pessoas. Vim com a família toda!",
+		"recipe_id": "macarrao_ao_molho", "servings": 6})
+	_add_order({"customer": "Dona Lúcia", "kind": Order.Kind.ENIGMATIC, "min_completed": 3,
 		"text": "Procuro um prato que não vai ao forno, é de massa e leva molho vermelho. Para 4 pessoas.",
 		"recipe_id": "macarrao_ao_molho", "servings": 4,
 		"clues": ["c_sem_forno", "c_molho_tomate"], "hidden_clues": ["c_massa_cozida"]})
-	order_templates.append({"customer": "Sr. Tavares", "kind": Order.Kind.ENIGMATIC, "min_completed": 3,
+	_add_order({"customer": "Sr. Tavares", "kind": Order.Kind.ENIGMATIC, "min_completed": 3,
 		"text": "Meu pai vinha aqui todo domingo por causa de um doce que o Verine fazia. Cremoso, balançava no prato... Você sabe qual é? Para 4.",
 		"recipe_id": "pudim_verine", "servings": 4,
 		"clues": ["c_doce_domingo", "c_cremoso"], "hidden_clues": ["c_calda"]})
+	# --- Nível 3 ---
+	_add_order({"customer": "Dona Rosa", "kind": Order.Kind.DESCRIPTIVE, "min_completed": 6,
+		"text": "Quero uma massa fininha, enrolada com recheio. Para 2 pessoas.",
+		"recipe_id": "panqueca", "servings": 2,
+		"clues": ["c_massa_fina", "c_recheio"], "hidden_clues": ["c_frigideira"]})
+	_add_order({"customer": "Caio", "kind": Order.Kind.ENIGMATIC, "min_completed": 6,
+		"text": "Preciso de algo leve, sem forno, que se enrola com recheio. Para 4 pessoas.",
+		"recipe_id": "panqueca", "servings": 4,
+		"clues": ["c_sem_forno", "c_recheio"], "hidden_clues": ["c_massa_fina", "c_frigideira"]})
+	_add_order({"customer": "Sra. Vera", "kind": Order.Kind.ENIGMATIC, "min_completed": 6,
+		"text": "O doce de domingo do Verine, cremoso e com calda dourada, para a família inteira: 8 pessoas!",
+		"recipe_id": "pudim_verine", "servings": 8,
+		"clues": ["c_doce_domingo", "c_calda"], "hidden_clues": ["c_cremoso"]})
+	_add_order({"customer": "Rafa", "kind": Order.Kind.DESCRIPTIVE, "min_completed": 6,
+		"text": "Churrasco de aniversário! Quero a massa assada em camadas com queijo gratinado, para 8 pessoas.",
+		"recipe_id": "lasanha", "servings": 8,
+		"clues": ["c_massa_assada", "c_camadas", "c_queijo_gratinado"], "hidden_clues": ["c_molho_tomate"]})
 
 # ------------------------------------------------------------------- história
 ## TEXTOS PROVISÓRIOS: a sequência dos mistérios e o desfecho ainda serão definidos pela equipe.
@@ -197,7 +256,7 @@ func _build_story() -> void:
 	story_notes.append({"at": 1, "text": "Entre as páginas do livro cai uma anotação: \"O segredo não está só na receita.\""})
 	story_notes.append({"at": 3, "text": "A página do Pudim do Verine volta a ser legível. Por que o vovô a escondeu?"})
 	story_notes.append({"at": 6, "text": "Um cliente antigo comenta que o vovô guardava algo no fundo da despensa."})
-	story_notes.append({"at": 8, "text": "Você reconstruiu o restaurante. O mistério do livro ainda guarda uma última página..."})
+	story_notes.append({"at": 10, "text": "Você reconstruiu o restaurante. O mistério do livro ainda guarda uma última página..."})
 
 func note_for(completed_count: int) -> String:
 	for n in story_notes:

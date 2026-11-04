@@ -20,6 +20,7 @@ config/features=PackedStringArray("4.7")
 
 [autoload]
 
+Settings="*res://scripts/autoload/settings.gd"
 GameData="*res://scripts/autoload/game_data.gd"
 Game="*res://scripts/autoload/game.gd"
 Flow="*res://scripts/autoload/flow.gd"

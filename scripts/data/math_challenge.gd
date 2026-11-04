@@ -6,6 +6,7 @@ extends RefCounted
 enum Type { INTEGER, DECIMAL, FRACTION, MULTIPLE_CHOICE, STRUCTURED }
 
 var id: String = ""
+var tier: int = 1                # nível de dificuldade (1 a 3)
 var topic: String = ""
 var type: Type = Type.INTEGER
 var statement: String = ""
@@ -32,6 +33,7 @@ func validate(raw: Variant) -> Dictionary:
 func clone() -> MathChallenge:
 	var c := MathChallenge.new()
 	c.id = id
+	c.tier = tier
 	c.topic = topic
 	c.type = type
 	c.statement = statement

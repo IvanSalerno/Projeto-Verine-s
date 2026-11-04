@@ -63,3 +63,33 @@ static func state_name(s: State) -> String:
 			return "Cancelado"
 		_:
 			return "Falhou"
+
+func to_dict() -> Dictionary:
+	return {
+		"id": id, "customer_name": customer_name, "kind": int(kind), "description": description,
+		"correct_recipe_id": correct_recipe_id, "selected_recipe_id": selected_recipe_id,
+		"servings": servings, "clue_ids": clue_ids, "hidden_clue_ids": hidden_clue_ids,
+		"restrictions": restrictions, "deadline_sec": deadline_sec,
+		"base_reward_cents": base_reward_cents, "state": int(state), "mistakes": mistakes,
+		"hints_used": hints_used, "paid": paid,
+	}
+
+static func from_dict(d: Dictionary) -> Order:
+	var o := Order.new()
+	o.id = int(d.get("id", 0))
+	o.customer_name = str(d.get("customer_name", ""))
+	o.kind = int(d.get("kind", 0)) as Kind
+	o.description = str(d.get("description", ""))
+	o.correct_recipe_id = str(d.get("correct_recipe_id", ""))
+	o.selected_recipe_id = str(d.get("selected_recipe_id", ""))
+	o.servings = int(d.get("servings", 1))
+	o.clue_ids.assign(d.get("clue_ids", []))
+	o.hidden_clue_ids.assign(d.get("hidden_clue_ids", []))
+	o.restrictions.assign(d.get("restrictions", []))
+	o.deadline_sec = float(d.get("deadline_sec", 0.0))
+	o.base_reward_cents = int(d.get("base_reward_cents", 0))
+	o.state = int(d.get("state", 0)) as State
+	o.mistakes = int(d.get("mistakes", 0))
+	o.hints_used = int(d.get("hints_used", 0))
+	o.paid = bool(d.get("paid", false))
+	return o

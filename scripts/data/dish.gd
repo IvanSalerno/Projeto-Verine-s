@@ -33,3 +33,16 @@ func next_step_label() -> String:
 	if steps_done < steps.size():
 		return steps[steps_done]
 	return ""
+
+func to_dict() -> Dictionary:
+	return {
+		"recipe_id": recipe_id, "servings": servings, "steps": steps, "steps_done": steps_done,
+		"state": int(state), "ingredients_consumed": ingredients_consumed,
+	}
+
+static func from_dict(d: Dictionary) -> Dish:
+	var dish := Dish.new(str(d.get("recipe_id", "")), int(d.get("servings", 1)), d.get("steps", []))
+	dish.steps_done = int(d.get("steps_done", 0))
+	dish.state = int(d.get("state", 0)) as State
+	dish.ingredients_consumed = bool(d.get("ingredients_consumed", false))
+	return dish

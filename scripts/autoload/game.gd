@@ -6,8 +6,14 @@ signal money_changed(new_balance: int)
 signal inventory_changed
 signal upgrade_purchased(upgrade_id: String)
 signal recipe_unlocked(recipe_id: String)
+signal score_changed(new_score: int)
+signal day_changed(new_day: int)
 
 const STARTING_MONEY := 5000   # R$ 50,00
+const HELP_THRESHOLD := 2000   # só pede ajuda com menos de R$ 20,00
+const HELP_AMOUNT := 3000      # ajuda do vizinho: R$ 30,00
+const HELP_MAX_USES := 3
+const SAVE_PATH := "user://verines.cfg"
 
 var money_cents: int = 0
 var inventory: Dictionary = {}                 # ingredient_id -> int (unidade base)
@@ -19,6 +25,20 @@ var orders_completed: int = 0
 var total_income: int = 0
 var total_expenses: int = 0
 var next_purchase_discount_percent: float = 0.0
+var help_uses: int = 0
+var score: int = 0
+var best_score: int = 0
+var day: int = 1
+var orders_today: int = 0
+var daily_challenge_done: bool = false
+var day_history: Array[Dictionary] = []        # {day, income, expenses, profit, orders}
+var _day_income_start: int = 0
+var _day_expenses_start: int = 0
+
+func _ready() -> void:
+	var cfg := ConfigFile.new()
+	if cfg.load(SAVE_PATH) == OK:
+		best_score = int(cfg.get_value("score", "best", 0))
 
 func new_game() -> void:
 	money_cents = STARTING_MONEY
@@ -31,6 +51,14 @@ func new_game() -> void:
 	total_income = 0
 	total_expenses = 0
 	next_purchase_discount_percent = 0.0
+	help_uses = 0
+	score = 0
+	day = 1
+	orders_today = 0
+	daily_challenge_done = false
+	day_history.clear()
+	_day_income_start = 0
+	_day_expenses_start = 0
 	for id in GameData.ingredients:
 		inventory[id] = 0
 	inventory["farinha"] = 1000
@@ -43,6 +71,8 @@ func new_game() -> void:
 			unlocked_recipes.append(rid)
 	money_changed.emit(money_cents)
 	inventory_changed.emit()
+	score_changed.emit(score)
+	day_changed.emit(day)
 
 # ---------------------------------------------------------------------- dinheiro
 func add_money(cents: int, reason: String) -> void:
@@ -62,6 +92,52 @@ func spend_money(cents: int, reason: String) -> bool:
 	ledger.append({"kind": "saida", "cents": cents, "reason": reason})
 	money_changed.emit(money_cents)
 	return true
+
+## Rede de segurança: evita que o jogador fique sem dinheiro e sem como continuar.
+func can_ask_help() -> bool:
+	return money_cents < HELP_THRESHOLD and help_uses < HELP_MAX_USES
+
+func ask_help() -> bool:
+	if not can_ask_help():
+		return false
+	help_uses += 1
+	add_money(HELP_AMOUNT, "Ajuda do vizinho")
+	return true
+
+# ------------------------------------------------------------------ placar e dias
+func add_score(points: int, _reason: String = "") -> void:
+	if points <= 0:
+		return
+	score += points
+	score_changed.emit(score)
+
+func day_income() -> int:
+	return total_income - _day_income_start
+
+func day_expenses() -> int:
+	return total_expenses - _day_expenses_start
+
+## Fecha o dia atual (guarda no histórico) e começa o próximo.
+func start_next_day() -> void:
+	var inc := day_income()
+	var exp := day_expenses()
+	day_history.append({"day": day, "income": inc, "expenses": exp, "profit": inc - exp, "orders": orders_today})
+	day += 1
+	orders_today = 0
+	daily_challenge_done = false
+	_day_income_start = total_income
+	_day_expenses_start = total_expenses
+	day_changed.emit(day)
+
+## Salva o recorde. Retorna true se a pontuação atual é um novo recorde.
+func register_final_score() -> bool:
+	if score > best_score:
+		best_score = score
+		var cfg := ConfigFile.new()
+		cfg.set_value("score", "best", best_score)
+		cfg.save(SAVE_PATH)
+		return true
+	return false
 
 func profit() -> int:
 	return total_income - total_expenses
@@ -181,3 +257,68 @@ func buy_upgrade(upgrade_id: String) -> Dictionary:
 	upgrade_purchased.emit(upgrade_id)
 	inventory_changed.emit()
 	return {"ok": true, "message": "Melhoria adquirida: %s." % u.display_name}
+
+# ------------------------------------------------------------------ salvamento
+func to_dict() -> Dictionary:
+	return {
+		"money_cents": money_cents,
+		"inventory": inventory,
+		"unlocked_recipes": unlocked_recipes,
+		"recovered": recovered,
+		"purchased_upgrades": purchased_upgrades,
+		"ledger": ledger.slice(maxi(0, ledger.size() - 60)),
+		"orders_completed": orders_completed,
+		"total_income": total_income,
+		"total_expenses": total_expenses,
+		"next_purchase_discount_percent": next_purchase_discount_percent,
+		"help_uses": help_uses,
+		"score": score,
+		"day": day,
+		"orders_today": orders_today,
+		"daily_challenge_done": daily_challenge_done,
+		"day_history": day_history,
+		"day_income_start": _day_income_start,
+		"day_expenses_start": _day_expenses_start,
+	}
+
+func from_dict(d: Dictionary) -> void:
+	new_game()
+	money_cents = int(d.get("money_cents", STARTING_MONEY))
+	var inv: Dictionary = d.get("inventory", {})
+	for k in inv:
+		inventory[str(k)] = int(inv[k])
+	unlocked_recipes.clear()
+	for r in d.get("unlocked_recipes", []):
+		unlocked_recipes.append(str(r))
+	recovered.clear()
+	var rec: Dictionary = d.get("recovered", {})
+	for rid in rec:
+		recovered[str(rid)] = {}
+		var lines: Dictionary = rec[rid]
+		for iid in lines:
+			recovered[str(rid)][str(iid)] = float(lines[iid])
+	purchased_upgrades.clear()
+	for u in d.get("purchased_upgrades", []):
+		purchased_upgrades.append(str(u))
+	ledger.clear()
+	for e in d.get("ledger", []):
+		ledger.append({"kind": str(e["kind"]), "cents": int(e["cents"]), "reason": str(e["reason"])})
+	orders_completed = int(d.get("orders_completed", 0))
+	total_income = int(d.get("total_income", 0))
+	total_expenses = int(d.get("total_expenses", 0))
+	next_purchase_discount_percent = float(d.get("next_purchase_discount_percent", 0.0))
+	help_uses = int(d.get("help_uses", 0))
+	score = int(d.get("score", 0))
+	day = int(d.get("day", 1))
+	orders_today = int(d.get("orders_today", 0))
+	daily_challenge_done = bool(d.get("daily_challenge_done", false))
+	day_history.clear()
+	for h in d.get("day_history", []):
+		day_history.append({"day": int(h["day"]), "income": int(h["income"]),
+			"expenses": int(h["expenses"]), "profit": int(h["profit"]), "orders": int(h["orders"])})
+	_day_income_start = int(d.get("day_income_start", 0))
+	_day_expenses_start = int(d.get("day_expenses_start", 0))
+	money_changed.emit(money_cents)
+	inventory_changed.emit()
+	score_changed.emit(score)
+	day_changed.emit(day)
