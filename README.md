@@ -1,169 +1,116 @@
-# 🍕 Verine's
+# Verine’s — Site Oficial
 
-**Um jogo educativo 2D que combina culinária, gerenciamento de restaurante, mistério e matemática aplicada.**
+**Site institucional do projeto Verine’s**, desenvolvido para apresentar a proposta do jogo, sua narrativa, jogabilidade, identidade visual e processo de desenvolvimento.
 
----
+## Sobre o projeto
 
-## 📖 Sobre o projeto
+Verine’s é um projeto de jogo digital 2D que combina desafios matemáticos com elementos de administração de restaurante.
 
-**Verine's** é um jogo digital educativo 2D desenvolvido com a proposta de integrar conhecimentos matemáticos, raciocínio lógico e administração em uma experiência interativa de gerenciamento de restaurante.
+Na história, o protagonista recebe como herança um restaurante abandonado que pertenceu ao seu avô. A partir disso, inicia uma jornada para recuperar o estabelecimento e preservar o legado familiar.
 
-Na história, o protagonista herda um antigo restaurante de seu avô, Verine. Ao assumir o estabelecimento, o jogador precisa recuperar o negócio, atender clientes, preparar receitas, administrar ingredientes e recursos e descobrir os mistérios relacionados ao passado da família.
+O jogo busca aproximar conteúdos matemáticos de situações práticas, envolvendo atividades como preparação de receitas, administração de recursos e melhorias no restaurante.
 
-Diferentemente de jogos educativos tradicionais, Verine's incorpora os desafios matemáticos diretamente às mecânicas de jogabilidade. Dessa forma, a matemática deixa de ser apresentada como uma atividade isolada e passa a fazer parte das decisões necessárias para o progresso dentro do jogo.
+O site foi desenvolvido para divulgar o projeto, apresentar suas características e centralizar informações importantes para os visitantes.
 
-## 🎯 Objetivo
+## Objetivos do site
 
-O principal objetivo do projeto é desenvolver uma experiência de aprendizagem baseada em jogos, utilizando situações do cotidiano de um restaurante para estimular o desenvolvimento de habilidades matemáticas e administrativas.
+- Apresentar o universo e a proposta educativa de Verine’s.
+- Divulgar a história e os elementos narrativos do jogo.
+- Demonstrar as mecânicas e funcionalidades.
+- Disponibilizar uma galeria de imagens do projeto.
+- Apresentar a equipe responsável pelo desenvolvimento.
+- Oferecer acesso ao download do jogo quando houver uma versão finalizada e testada.
 
-Entre os objetivos específicos estão:
+## Tecnologias utilizadas
 
-- Desenvolver um sistema de gerenciamento de restaurante.
-- Implementar desafios matemáticos contextualizados.
-- Estimular o raciocínio lógico e a resolução de problemas.
-- Trabalhar conceitos de frações, proporções e cálculos financeiros.
-- Desenvolver uma narrativa interativa relacionada à história do personagem.
-- Incorporar elementos de gamificação, progressão e recompensas.
-- Proporcionar uma interface intuitiva e uma experiência envolvente.
+| Tecnologia | Finalidade |
+|---|---|
+| HTML5 | Estruturação e organização do conteúdo. |
+| CSS3 | Estilização, identidade visual e responsividade. |
+| JavaScript | Implementação de funcionalidades e interatividade. |
+| Godot Engine | Desenvolvimento e exportação do jogo Verine’s. |
 
-## 🎮 Jogabilidade e mecânicas
+## Identidade visual
 
-A experiência de jogo é construída a partir de diferentes atividades relacionadas ao funcionamento de um restaurante.
-
-### 📋 Atendimento de clientes
-
-Os clientes realizam pedidos utilizando descrições e dicas sobre os pratos. O jogador precisa interpretar as informações e identificar corretamente a receita correspondente no livro de receitas.
-
-### 📖 Livro de receitas
-
-O restaurante possui um livro de receitas que auxilia o jogador na identificação e preparação dos pratos. Algumas informações podem estar deterioradas, exigindo a resolução de desafios matemáticos para recuperar os dados originais.
-
-### 🧮 Desafios matemáticos
-
-A matemática está integrada às atividades do restaurante, envolvendo situações como:
-
-- Frações: divisão e fatiamento de alimentos.
-- Razão e proporção: ajuste das quantidades de ingredientes.
-- Matrizes: resolução de desafios matemáticos mais complexos.
-- Aritmética financeira: cálculo de valores e troco.
-- Conversão de unidades: adequação das quantidades utilizadas nas receitas.
-- Gerenciamento de recursos: controle de ingredientes e estoque.
-
-### 🍳 Preparação de pratos
-
-Depois de identificar a receita e recuperar as informações necessárias, o jogador verifica os ingredientes disponíveis e realiza o preparo do pedido.
-
-### 📦 Gerenciamento de estoque
-
-O jogador precisa acompanhar a disponibilidade dos ingredientes e administrar os recursos do estabelecimento para manter o funcionamento do restaurante.
-
-### ⭐ Melhorias e progressão
-
-O gerenciamento financeiro permite investir em melhorias para o restaurante, contribuindo para sua recuperação e evolução ao longo da experiência.
-
-### 🔎 Narrativa e mistério
-
-Além das atividades administrativas e culinárias, o jogo apresenta um componente narrativo relacionado ao passado da família Verine. Conforme o restaurante evolui, o jogador também avança na descoberta dos acontecimentos relacionados ao estabelecimento.
-
-## 🎨 Identidade visual
-
-A identidade visual de Verine's foi desenvolvida para transmitir uma atmosfera acolhedora, relacionada à culinária, à memória familiar e ao ambiente de um restaurante.
-
-A direção visual utiliza tons terrosos, beges e amarelos quentes, criando uma identidade consistente para o projeto.
+A identidade visual foi planejada para transmitir uma atmosfera acolhedora, relacionada à culinária, à memória familiar e ao ambiente de um restaurante.
 
 ### Paleta de cores
 
-| Cor | Código | Aplicação |
+| Cor | Código HEX | Aplicação |
 |---|---|---|
-| Bege acinzentado | `#CFCDBE` | Fundos e áreas neutras |
-| Marrom | `#7B3C15` | Títulos e elementos de identidade |
-| Bege amarronzado | `#C3B18E` | Cartões e áreas intermediárias |
-| Amarelo dourado | `#FFDD73` | Botões e destaques |
-| Creme claro | `#FFEDCC` | Fundos claros e elementos de leitura |
+| Bege acinzentado | `#CFCDBE` | Fundos de apoio e áreas neutras. |
+| Marrom | `#7B3C15` | Títulos, navegação e destaques. |
+| Bege amarronzado | `#C3B18E` | Cartões e blocos intermediários. |
+| Amarelo dourado | `#FFDD73` | Botões, ícones e chamadas importantes. |
+| Creme claro | `#FFEDCC` | Fundos claros e textos em áreas escuras. |
 
 ### Tipografia
 
-- **Playfair Display:** utilizada em títulos e elementos de destaque, proporcionando personalidade visual.
-- **DM Sans:** utilizada em textos, menus e elementos de interface, priorizando legibilidade.
+O projeto utiliza duas famílias tipográficas:
 
-## 🛠️ Tecnologias utilizadas
+- **Playfair Display:** utilizada em títulos e chamadas principais, proporcionando personalidade e identidade visual.
+- **DM Sans:** utilizada em textos corridos, menus, botões e elementos de interface, priorizando a legibilidade.
 
-### Desenvolvimento do jogo
+## Estrutura do site
 
-- **Godot Engine:** ferramenta utilizada para o desenvolvimento do jogo digital 2D.
+O site está organizado nas seguintes seções:
 
-### Desenvolvimento do site
+- **Home:** apresentação inicial do projeto e chamada principal.
+- **Sobre o jogo:** introdução à proposta e ao universo de Verine’s.
+- **Jogabilidade:** apresentação das mecânicas e dos desafios matemáticos.
+- **Galeria:** espaço destinado às capturas de tela e imagens do jogo.
+- **História:** apresentação da narrativa e do legado familiar.
+- **Download:** área destinada à disponibilização do jogo.
+- **Desenvolvimento e equipe:** informações sobre o processo de criação e os integrantes.
+- **Rodapé:** informações finais e links úteis.
 
-- **HTML5:** estruturação do conteúdo.
-- **CSS3:** estilização e responsividade.
-- **JavaScript:** implementação de funcionalidades e interações.
+## Responsividade e experiência do usuário
 
-## 🧩 Modelagem do sistema
+O site foi planejado para funcionar em diferentes dispositivos, incluindo computadores, tablets e celulares.
 
-O projeto também conta com documentação de modelagem UML, utilizada para estruturar e representar o funcionamento do sistema.
+A organização dos elementos busca proporcionar:
 
-As principais classes definidas são:
+- Navegação simples e intuitiva.
+- Organização visual das informações.
+- Adaptação a diferentes tamanhos de tela.
+- Hierarquia entre títulos, textos e elementos interativos.
+- Contraste adequado para facilitar a leitura.
 
-- Cliente
-- Jogador
-- Restaurante
-- Pedido
-- Receita
-- DesafioMatematico
-- Estoque
-- Ingrediente
-- Melhoria
+## Galeria e recursos visuais
 
-A modelagem contempla diagramas de casos de uso, classes, objetos e sequência, representando os principais processos da experiência de jogo.
+O projeto prevê a utilização de imagens reais do jogo, ilustrações e capturas de tela.
 
-## 🖌️ Protótipo
+Os espaços visuais foram planejados para permitir a inclusão posterior desses materiais, acompanhando a evolução do desenvolvimento de Verine’s.
 
-O projeto possui protótipos iniciais que representam a organização das telas e os elementos visuais da experiência.
+Os arquivos de imagem devem ser organizados em diretórios específicos, como `assets`, facilitando sua localização e manutenção.
 
-Entre os elementos planejados estão o menu inicial, o livro de receitas e a interface de preparação dos pratos.
+## Download do jogo
 
-Os protótipos servem como referência para a implementação e evolução da interface do jogo.
+A seção de download será disponibilizada quando o jogo estiver exportado pela Godot Engine e possuir uma versão testada e pronta para distribuição.
 
-## 👥 Equipe de desenvolvimento
+A disponibilização deverá informar a plataforma compatível e incluir orientações de execução, quando necessário.
 
-Projeto desenvolvido por estudantes do **Instituto Federal de Educação, Ciência e Tecnologia de São Paulo (IFSP) — Campus São Paulo**.
+Enquanto não houver uma versão distribuível, a seção permanecerá como espaço reservado ou apresentará uma mensagem informando que o jogo ainda está em desenvolvimento.
 
-| Integrante | Participação |
-|---|---|
-| Ana Clara Lima Barbosa | Design e desenvolvimento visual |
-| Cauê Caldeira Celestino | Design e mecânicas do jogo |
-| Gabriel das Graças | Desenvolvimento do jogo e mecânicas |
-| Isabella Marques Bartu | Desenvolvimento web |
-| Ivan Salerno de Oliveira Junior | Desenvolvimento web |
+## Equipe de desenvolvimento
 
-## 📅 Desenvolvimento
+Projeto desenvolvido no contexto acadêmico do Instituto Federal de Educação, Ciência e Tecnologia de São Paulo (IFSP).
 
-O projeto foi organizado em etapas de desenvolvimento, contemplando:
+**Integrantes:**
+- Ana Clara
+- Cauê Celestino
+- Gabriel das Graças
+- Isabella Bartu
+- Ivan Salerno
 
-1. Planejamento e modelagem do sistema.
-2. Criação dos personagens e elementos visuais.
-3. Desenvolvimento da estrutura e das interfaces.
-4. Implementação das mecânicas de interação.
-5. Desenvolvimento dos sistemas de clientes e pedidos.
-6. Implementação dos desafios matemáticos.
-7. Desenvolvimento do estoque e preparação de receitas.
-8. Integração dos componentes do jogo.
-9. Testes, correções e finalização.
+## Considerações finais
 
-## 🚧 Status do projeto
+O site de Verine’s foi desenvolvido com o propósito de fortalecer a identidade do projeto e apresentar sua proposta de maneira organizada, acessível e visualmente coerente.
 
-**Em desenvolvimento.**
+A combinação entre HTML5, CSS3 e JavaScript permite construir uma experiência interativa e responsiva, enquanto a identidade visual reforça os elementos narrativos e a atmosfera do jogo.
 
-Verine's está em processo de desenvolvimento, passando pelas etapas de implementação das mecânicas, integração dos elementos visuais, testes e aprimoramento da experiência de jogo.
-
-Novas funcionalidades, melhorias e conteúdos poderão ser incorporados conforme a evolução do projeto.
-
-## 🎓 Contexto acadêmico
-
-Verine's é um projeto integrado desenvolvido no contexto acadêmico do curso de Desenvolvimento de Sistemas do Instituto Federal de Educação, Ciência e Tecnologia de São Paulo.
-
-O projeto busca explorar o potencial dos jogos digitais como ferramentas de aprendizagem, aproximando conteúdos matemáticos de situações práticas e estimulando o engajamento dos estudantes.
+O projeto poderá receber atualizações conforme o desenvolvimento do jogo avance, incluindo novas imagens, informações, funcionalidades e a futura disponibilização para download.
 
 ---
 
-**Verine's — Onde a matemática encontra a cozinha, e cada receita guarda uma história. 🍕**
+**Verine’s — Uma jornada de sabores, desafios e descobertas.**
