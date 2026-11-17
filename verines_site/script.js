@@ -54,8 +54,8 @@ const downloadButton = document.querySelector("#download-button");
 const downloadStatus = document.querySelector("#download-status");
 const downloadNote = document.querySelector("#download-note");
 
-// Deixe vazio enquanto o jogo não estiver exportado.
-const gameFile = "";
+// Caminho do arquivo exportado do jogo
+const gameFile = "./verines_site/Verine'sGame.zip";
 
 if (gameFile !== "") {
     downloadButton.href = gameFile;
@@ -64,17 +64,12 @@ if (gameFile !== "") {
 
     downloadStatus.textContent = "Download disponível";
     downloadNote.textContent =
-        "Clique no botão para baixar o jogo.";
-
-    downloadButton.addEventListener("click", (event) => {
-        if (downloadButton.getAttribute("aria-disabled") === "true") {
-            event.preventDefault();
-        }
-    });
+        "Clique no botão abaixo para baixar o jogo Verine's.";
 } else {
+    downloadButton.setAttribute("aria-disabled", "true");
+
     downloadButton.addEventListener("click", (event) => {
         event.preventDefault();
-
         downloadNote.textContent =
             "O download será liberado quando o jogo estiver disponível.";
     });
