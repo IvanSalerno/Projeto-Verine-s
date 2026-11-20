@@ -1,0 +1,12 @@
+{
+  "name": "verines-site",
+  "version": "1.0.0",
+  "description": "Site oficial do jogo educativo Verine's com API própria (Node.js, sem dependências).",
+  "private": true,
+  "scripts": {
+    "start": "node server/server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

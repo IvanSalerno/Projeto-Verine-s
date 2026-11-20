@@ -1,0 +1,75 @@
+{
+  "_fonte": "Dados espelhados do catálogo do jogo (Verine's Game/scripts/autoload/game_data.gd). Valores monetários em centavos.",
+  "ingredientes": {
+    "farinha":      { "nome": "Farinha",          "unidade": "g",  "pacote": 1000, "precoPacote": 600,  "categoria": "Secos" },
+    "acucar":       { "nome": "Açúcar",           "unidade": "g",  "pacote": 1000, "precoPacote": 450,  "categoria": "Secos" },
+    "macarrao":     { "nome": "Macarrão",         "unidade": "g",  "pacote": 500,  "precoPacote": 600,  "categoria": "Secos" },
+    "molho_tomate": { "nome": "Molho de tomate",  "unidade": "g",  "pacote": 500,  "precoPacote": 700,  "categoria": "Molhos" },
+    "queijo":       { "nome": "Queijo",           "unidade": "g",  "pacote": 500,  "precoPacote": 1800, "categoria": "Laticínios" },
+    "leite":        { "nome": "Leite",            "unidade": "ml", "pacote": 1000, "precoPacote": 500,  "categoria": "Laticínios" },
+    "ovo":          { "nome": "Ovos",             "unidade": "un", "pacote": 12,   "precoPacote": 900,  "categoria": "Frescos" }
+  },
+  "receitas": [
+    {
+      "id": "bolo", "nome": "Bolo da Vovó", "descricao": "Bolo simples e fofinho, clássico da casa.",
+      "porcoesBase": 4, "precoPorcao": 800, "bloqueada": false,
+      "pistas": ["Prato doce, servido de sobremesa.", "Vai ao forno."],
+      "passos": ["Separar os ingredientes", "Misturar a massa", "Assar no forno", "Finalizar", "Servir"],
+      "ingredientes": [
+        { "id": "farinha", "quantidade": 200 }, { "id": "ovo", "quantidade": 2 },
+        { "id": "leite", "quantidade": 100 }, { "id": "acucar", "quantidade": 150 }
+      ]
+    },
+    {
+      "id": "lasanha", "nome": "Lasanha de Forno", "descricao": "Massa em camadas com molho e queijo gratinado.",
+      "porcoesBase": 4, "precoPorcao": 1500, "bloqueada": false,
+      "pistas": ["Vai ao forno.", "Massa assada.", "Leva molho de tomate.", "Queijo derretido por cima.", "É montado em camadas."],
+      "passos": ["Separar os ingredientes", "Montar as camadas", "Assar no forno", "Finalizar", "Servir"],
+      "ingredientes": [
+        { "id": "macarrao", "quantidade": 250 }, { "id": "molho_tomate", "quantidade": 200 },
+        { "id": "queijo", "quantidade": 150, "ilegivel": true, "desafio": "rec_lasanha_queijo" }
+      ]
+    },
+    {
+      "id": "macarrao_ao_molho", "nome": "Macarrão ao Molho", "descricao": "Massa cozida na panela com molho de tomate.",
+      "porcoesBase": 2, "precoPorcao": 1000, "bloqueada": false,
+      "pistas": ["Leva molho de tomate.", "Massa cozida na panela.", "Não precisa de forno."],
+      "passos": ["Separar os ingredientes", "Cozinhar a massa", "Aquecer o molho", "Misturar", "Servir"],
+      "ingredientes": [
+        { "id": "macarrao", "quantidade": 200 }, { "id": "molho_tomate", "quantidade": 150 },
+        { "id": "queijo", "quantidade": 40 }
+      ]
+    },
+    {
+      "id": "panqueca", "nome": "Panqueca Recheada", "descricao": "Massa fina feita na frigideira e enrolada com recheio.",
+      "porcoesBase": 2, "precoPorcao": 700, "bloqueada": false,
+      "pistas": ["Não precisa de forno.", "Massa bem fina e leve.", "É enrolado com recheio.", "Feito na frigideira."],
+      "passos": ["Separar os ingredientes", "Misturar a massa", "Fritar na frigideira", "Rechear e enrolar", "Servir"],
+      "ingredientes": [
+        { "id": "farinha", "quantidade": 100 }, { "id": "ovo", "quantidade": 1 }, { "id": "leite", "quantidade": 200 }
+      ]
+    },
+    {
+      "id": "pudim_verine", "nome": "Pudim do Verine", "descricao": "Receita antiga do avô, página parcialmente apagada.",
+      "porcoesBase": 4, "precoPorcao": 1800, "bloqueada": true,
+      "pistas": ["Prato doce, servido de sobremesa.", "Era o doce de domingo do Verine.", "Textura cremosa que balança no prato.", "Coberto com calda dourada."],
+      "passos": ["Separar os ingredientes", "Fazer a calda", "Bater a mistura", "Assar em banho-maria", "Servir"],
+      "ingredientes": [
+        { "id": "leite", "quantidade": 500 }, { "id": "ovo", "quantidade": 3 },
+        { "id": "acucar", "quantidade": 200, "ilegivel": true, "desafio": "rec_pudim_acucar" }
+      ]
+    }
+  ],
+  "desafiosRecuperacao": {
+    "rec_lasanha_queijo": {
+      "tema": "Razão e proporção", "formato": "numero", "receita": "lasanha", "ingrediente": "queijo", "resposta": 150,
+      "enunciado": "Uma mancha cobriu a quantidade de queijo da Lasanha de Forno (receita para 4 porções). Uma anotação do vovô diz: \"para 2 porções eu usava 75 g de queijo\". Quantos gramas de queijo a receita pede para 4 porções?",
+      "dica": "4 porções é o dobro de 2 porções."
+    },
+    "rec_pudim_acucar": {
+      "tema": "Frações", "formato": "numero", "receita": "pudim_verine", "ingrediente": "acucar", "resposta": 200,
+      "enunciado": "A página do Pudim do Verine está apagada no trecho do açúcar. A nota na margem diz: \"o açúcar é 2/5 do volume de leite (considere 1 ml = 1 g)\". A receita leva 500 ml de leite. Quantos gramas de açúcar ela pede?",
+      "dica": "Calcule 500 ÷ 5 e depois multiplique por 2."
+    }
+  }
+}

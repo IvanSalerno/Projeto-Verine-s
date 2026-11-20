@@ -9,11 +9,19 @@
   <meta name="description"
     content="Conheça Verine's, um jogo sobre restaurar um restaurante, descobrir histórias e aprender matemática.">
 
+  <meta name="theme-color" content="#7B3C15">
+
+  <!-- Endereço da API do Verine's. Vazio = automático (mesmo servidor ou http://localhost:3000). -->
+  <meta name="verines-api" content="">
+
   <title>Verine's</title>
 
   <link rel="stylesheet" href="./verines_site/style.css">
 
+  <!-- Ordem importa: api.js cria window.VerinesAPI, usado pelos outros scripts -->
+  <script src="./verines_site/api.js" defer></script>
   <script src="./verines_site/script.js" defer></script>
+  <script src="./verines_site/cozinha.js" defer></script>
 
   <link rel="icon" href="./verines_site/logo.ico" type="image/x-icon">
 
@@ -21,19 +29,20 @@
 
 <body>
 
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
   <header class="site-header"><a class="logo" href="#inicio">Verine<span>'</span>s</a><button class="menu-toggle"
-      aria-label="Abrir menu" aria-expanded="false">☰</button>
+      type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-principal">☰</button>
 
-    <nav class="nav-links" aria-label="Navegação principal"><a href="#inicio">Início</a><a href="#sobre">Sobre o
-
-        jogo</a><a href="#jogabilidade">Jogabilidade</a><a href="#galeria">Galeria</a><a href="#download">Download</a><a
-        href="#desenvolvimento">Desenvolvimento</a></nav><a class="button button-small" href="#jogabilidade">Conheça o
-
-      jogo</a>
+    <nav class="nav-links" id="menu-principal" aria-label="Navegação principal"><a href="#inicio">Início</a><a
+        href="#sobre">Sobre o jogo</a><a href="#jogabilidade">Jogabilidade</a><a href="#cozinha">Cozinha de
+        Testes</a><a href="#galeria">Galeria</a><a href="#download">Download</a><a
+        href="#desenvolvimento">Desenvolvimento</a><a href="#contato">Contato</a></nav><a class="button button-small"
+      href="#jogabilidade">Conheça o jogo</a>
 
   </header>
 
-  <main>
+  <main id="conteudo">
 
     <section class="hero" id="inicio">
 
@@ -44,25 +53,23 @@
         <h1>Restaure o passado.<br>Saboreie o futuro.</h1>
 
         <p>Um restaurante abandonado, receitas esquecidas e uma história esperando para ser descoberta. Em Verine's,
-
           cada prato ajuda a reconstruir um legado.</p><a class="button" href="#sobre">Conheça o jogo <span>→</span></a>
 
       </div>
 
       <div class="hero-art image-placeholder" data-image="hero">
         <img src="./verines_site/Fotografias do Verine's/verine's cenario_20261104_103142_0000.png"
-          alt="Cenário principal do jogo Verine's" style="width:100%;height:100%;object-fit:contain;display:block;">
-      </div><span class="image-label">IMAGEM ILUSTRATIVA</span>
-
+          alt="Cenário principal do jogo Verine's">
+        <span class="image-label">IMAGEM ILUSTRATIVA</span>
       </div>
 
-      <div class="hero-stamp">UMA NOVA<br><b>HISTÓRIA</b><br>COMEÇA AQUI</div>
+      <div class="hero-stamp" aria-hidden="true">UMA NOVA<br><b>HISTÓRIA</b><br>COMEÇA AQUI</div>
 
     </section>
 
     <section class="intro section-wrap" id="sobre">
 
-      <div class="section-icon">♨</div>
+      <div class="section-icon" aria-hidden="true">♨</div>
 
       <div class="intro-text">
 
@@ -71,9 +78,7 @@
         <h2>Mais que um restaurante…<br>uma herança.</h2>
 
         <p>Após herdar o antigo restaurante de seu avô, o protagonista precisa recuperar o espaço e manter viva a
-
           memória de quem o construiu. Entre receitas, clientes e desafios, cada passo revela um pouco mais dessa
-
           história.</p><a class="text-link" href="#desenvolvimento">Saiba mais sobre o projeto ↗</a>
 
       </div>
@@ -81,12 +86,8 @@
       <div class="polaroid">
 
         <div class="image-placeholder photo-placeholder" data-image="restaurant">
-          <img src="./verines_site/Fotografias do Verine's/IMG-20261103-WA0031.jpg" alt="Imagem do restaurante Verine's"
-            style="width:100%;height:100%;object-fit:contain;display:block;">
+          <img src="./verines_site/Fotografias do Verine's/IMG-20261103-WA0031.jpg" alt="Imagem do restaurante Verine's">
         </div>
-
-      </div>
-
 
       </div>
 
@@ -106,7 +107,7 @@
 
       <div class="feature-grid">
 
-        <article class="feature-card"><span class="feature-icon">♨</span>
+        <article class="feature-card"><span class="feature-icon" aria-hidden="true">♨</span>
 
           <h3>Culinária</h3>
 
@@ -114,7 +115,7 @@
 
         </article>
 
-        <article class="feature-card"><span class="feature-icon">▤</span>
+        <article class="feature-card"><span class="feature-icon" aria-hidden="true">▤</span>
 
           <h3>Administração</h3>
 
@@ -122,7 +123,7 @@
 
         </article>
 
-        <article class="feature-card"><span class="feature-icon">∑</span>
+        <article class="feature-card"><span class="feature-icon" aria-hidden="true">∑</span>
 
           <h3>Desafios matemáticos</h3>
 
@@ -130,13 +131,162 @@
 
         </article>
 
-        <article class="feature-card"><span class="feature-icon">✦</span>
+        <article class="feature-card"><span class="feature-icon" aria-hidden="true">✦</span>
 
           <h3>História e progresso</h3>
 
           <p>Desbloqueie melhorias e descubra memórias que ficaram para trás.</p>
 
         </article>
+
+      </div>
+
+    </section>
+
+    <!-- ================= COZINHA DE TESTES (integração com APIs) ================= -->
+    <section class="kitchen-section" id="cozinha">
+
+      <div class="section-wrap">
+
+        <div class="section-heading heading-row">
+
+          <div>
+
+            <p class="eyebrow">EXPERIMENTE AGORA</p>
+
+            <h2>Cozinha de Testes</h2>
+
+            <p>Receitas, desafios e contas do restaurante com dados vindos do servidor do Verine's e de serviços
+              públicos.</p>
+
+          </div><span class="api-badge" data-api-status="verificando" role="status">Verificando servidor…</span>
+
+        </div>
+
+        <div class="kitchen-tabs" role="tablist" aria-label="Atividades da cozinha">
+          <button class="kitchen-tab is-active" type="button" role="tab" id="aba-receitas" aria-selected="true"
+            aria-controls="painel-receitas">📖 Livro de receitas</button>
+          <button class="kitchen-tab" type="button" role="tab" id="aba-desafios" aria-selected="false"
+            aria-controls="painel-desafios" tabindex="-1">∑ Desafios e ranking</button>
+          <button class="kitchen-tab" type="button" role="tab" id="aba-mercado" aria-selected="false"
+            aria-controls="painel-mercado" tabindex="-1">💱 Mercado do dia</button>
+        </div>
+
+        <!-- Painel 1: livro de receitas (GET /api/receitas e /api/receitas/:id) -->
+        <div class="kitchen-panel" id="painel-receitas" role="tabpanel" aria-labelledby="aba-receitas">
+          <div class="recipe-layout">
+            <div class="recipe-list" id="lista-receitas" aria-live="polite">
+              <p class="loading-text">Carregando o livro de receitas…</p>
+            </div>
+            <article class="paper-card recipe-detail" id="detalhe-receita" aria-live="polite">
+              <span class="card-kicker">LIVRO DO VOVÔ</span>
+              <h3>Escolha uma receita</h3>
+              <p>Selecione um prato para ver os ingredientes, ajustar as porções e calcular o custo. Algumas páginas
+                estão manchadas: resolva o desafio para recuperar o dado perdido.</p>
+            </article>
+          </div>
+        </div>
+
+        <!-- Painel 2: desafios matemáticos + ranking (GET/POST) -->
+        <div class="kitchen-panel" id="painel-desafios" role="tabpanel" aria-labelledby="aba-desafios" hidden>
+          <div class="challenge-layout">
+
+            <div class="paper-card challenge-card">
+              <div class="challenge-top">
+                <label class="field field-inline" for="tema-desafio"><span>Tema</span>
+                  <select id="tema-desafio">
+                    <option value="aleatorio">Aleatório</option>
+                    <option value="proporcao">Razão e proporção</option>
+                    <option value="troco">Troco</option>
+                    <option value="fracao">Frações</option>
+                    <option value="regra_de_tres">Regra de três</option>
+                    <option value="matriz">Matrizes</option>
+                  </select>
+                </label>
+                <div class="scoreboard" aria-live="polite">
+                  <span>Pontos <b id="placar-pontos">0</b></span>
+                  <span>Acertos <b id="placar-acertos">0/0</b></span>
+                </div>
+              </div>
+
+              <div id="desafio-vazio" class="challenge-empty">
+                <span aria-hidden="true">🧮</span>
+                <p>Cada desafio é gerado pelo servidor a partir das receitas e preços do jogo. A resposta é conferida no
+                  servidor.</p>
+              </div>
+
+              <form id="form-desafio" class="challenge-form" novalidate hidden>
+                <span class="card-kicker" id="desafio-tema"></span>
+                <p class="challenge-statement" id="desafio-enunciado"></p>
+                <label class="field" for="resposta-desafio"><span>Sua resposta</span>
+                  <input id="resposta-desafio" name="resposta" autocomplete="off" required>
+                </label>
+                <div class="form-actions">
+                  <button class="button" type="submit">Responder</button>
+                  <button class="button-ghost" type="button" id="btn-dica">Ver dica</button>
+                </div>
+                <p class="challenge-hint" id="desafio-dica" hidden></p>
+                <p class="feedback" id="desafio-feedback" role="status"></p>
+              </form>
+
+              <div class="form-actions challenge-actions">
+                <button class="button" type="button" id="btn-novo-desafio">Novo desafio</button>
+                <button class="button-ghost" type="button" id="btn-nova-partida">Recomeçar partida</button>
+              </div>
+            </div>
+
+            <aside class="paper-card ranking-card" aria-labelledby="titulo-ranking">
+              <span class="card-kicker">QUEM MANDA NA COZINHA</span>
+              <h3 id="titulo-ranking">Ranking</h3>
+              <ol class="ranking-list" id="lista-ranking" aria-live="polite">
+                <li class="loading-text">Carregando…</li>
+              </ol>
+              <form id="form-ranking" class="ranking-form" novalidate>
+                <label class="field" for="nome-ranking"><span>Seu nome no ranking</span>
+                  <input id="nome-ranking" name="nome" maxlength="20" autocomplete="nickname" required>
+                </label>
+                <button class="button" type="submit" id="btn-salvar-ranking" disabled>Salvar pontuação</button>
+                <p class="feedback" id="ranking-feedback" role="status"></p>
+              </form>
+            </aside>
+
+          </div>
+        </div>
+
+        <!-- Painel 3: mercado (API externa de cotações) -->
+        <div class="kitchen-panel" id="painel-mercado" role="tabpanel" aria-labelledby="aba-mercado" hidden>
+          <div class="market-layout">
+
+            <div class="paper-card market-card">
+              <span class="card-kicker">COTAÇÃO EM TEMPO REAL</span>
+              <h3>Câmbio de hoje</h3>
+              <p>Alguns ingredientes do Verine's são importados. Para fazer as compras, o restaurante precisa converter
+                os preços para reais.</p>
+              <div class="market-rates" id="cotacoes" aria-live="polite">
+                <p class="loading-text">Buscando cotações…</p>
+              </div>
+              <p class="market-source" id="cotacao-fonte"></p>
+              <button class="button-ghost" type="button" id="btn-atualizar-cotacao">↻ Atualizar cotação</button>
+            </div>
+
+            <div class="paper-card market-card">
+              <span class="card-kicker">DESAFIO DE IMPORTAÇÃO</span>
+              <h3>Fechando a compra</h3>
+              <p class="challenge-statement" id="mercado-enunciado">Aguardando a cotação…</p>
+              <form id="form-mercado" class="challenge-form" novalidate>
+                <label class="field" for="resposta-mercado"><span>Sua resposta</span>
+                  <input id="resposta-mercado" inputmode="decimal" autocomplete="off" required disabled>
+                </label>
+                <div class="form-actions">
+                  <button class="button" type="submit" disabled>Conferir</button>
+                  <button class="button-ghost" type="button" id="btn-novo-produto" disabled>Outro produto</button>
+                </div>
+                <p class="feedback" id="mercado-feedback" role="status"></p>
+              </form>
+            </div>
+
+          </div>
+        </div>
 
       </div>
 
@@ -164,57 +314,57 @@
           <button class="gallery-tile image-placeholder" type="button" data-image="gallery-1"
             aria-label="Ambiente de preparo">
             <img src="./verines_site/Fotografias do Verine's/IMG-20261103-WA0028.jpg" alt="Ambiente de preparo"
-              style="width:100%;height:100%;object-fit:contain;display:block;">
+              loading="lazy">
           </button>
           <button class="gallery-tile image-placeholder" type="button" data-image="gallery-2"
             aria-label="Equipamentos e utensílios">
             <img src="./verines_site/Fotografias do Verine's/IMG-20261103-WA0029.jpg" alt="Equipamentos e utensílios"
-              style="width:100%;height:100%;object-fit:contain;display:block;">
+              loading="lazy">
           </button>
           <button class="gallery-tile image-placeholder" type="button" data-image="gallery-3"
             aria-label="Área do restaurante">
             <img src="./verines_site/Fotografias do Verine's/IMG-20261103-WA0032.jpg" alt="Área do restaurante"
-              style="width:100%;height:100%;object-fit:contain;display:block;">
+              loading="lazy">
           </button>
           <button class="gallery-tile image-placeholder" type="button" data-image="gallery-4"
             aria-label="Livro de receitas">
             <img src="./verines_site/Fotografias do Verine's/IMG-20261103-WA0036.jpg" alt="Livro de receitas"
-              style="width:100%;height:100%;object-fit:contain;display:block;">
+              loading="lazy">
           </button>
           <button class="gallery-tile image-placeholder" type="button" data-image="gallery-5"
             aria-label="Página do livro de receitas">
             <img src="./verines_site/Fotografias do Verine's/IMG-20261103-WA0037.jpg" alt="Página do livro de receitas"
-              style="width:100%;height:100%;object-fit:contain;display:block;">
+              loading="lazy">
           </button>
           <button class="gallery-tile image-placeholder" type="button" data-image="gallery-6"
             aria-label="Personagem do jogo">
             <img src="./verines_site/Fotografias do Verine's/IMG-20261103-WA0147.jpg" alt="Personagem do jogo"
-              style="width:100%;height:100%;object-fit:contain;display:block;">
+              loading="lazy">
           </button>
           <button class="gallery-tile image-placeholder" type="button" data-image="gallery-7"
             aria-label="Personagem do jogo">
             <img src="./verines_site/Fotografias do Verine's/IMG-20261103-WA0148.jpg" alt="Personagem do jogo"
-              style="width:100%;height:100%;object-fit:contain;display:block;">
+              loading="lazy">
           </button>
           <button class="gallery-tile image-placeholder" type="button" data-image="gallery-8"
             aria-label="Personagem do jogo">
             <img src="./verines_site/Fotografias do Verine's/IMG-20261103-WA0150.jpg" alt="Personagem do jogo"
-              style="width:100%;height:100%;object-fit:contain;display:block;">
+              loading="lazy">
           </button>
           <button class="gallery-tile image-placeholder" type="button" data-image="gallery-9"
             aria-label="Personagem do jogo">
             <img src="./verines_site/Fotografias do Verine's/IMG-20261103-WA0151.jpg" alt="Personagem do jogo"
-              style="width:100%;height:100%;object-fit:contain;display:block;">
+              loading="lazy">
           </button>
           <button class="gallery-tile image-placeholder" type="button" data-image="gallery-10"
             aria-label="Personagem do jogo">
             <img src="./verines_site/Fotografias do Verine's/IMG-20261103-WA0152.jpg" alt="Personagem do jogo"
-              style="width:100%;height:100%;object-fit:contain;display:block;">
+              loading="lazy">
           </button>
           <button class="gallery-tile image-placeholder" type="button" data-image="gallery-11"
             aria-label="Personagem do jogo">
             <img src="./verines_site/Fotografias do Verine's/IMG-20261103-WA0153.jpg" alt="Personagem do jogo"
-              style="width:100%;height:100%;object-fit:contain;display:block;">
+              loading="lazy">
           </button>
         </div>
       </div>
@@ -231,94 +381,57 @@
           <h2>Receitas que alimentam<br>memórias.</h2>
 
           <p>Explore um restaurante em reconstrução e descubra por que esse lugar é tão importante para o protagonista.
-
           </p>
 
         </div>
 
         <div class="banner-art image-placeholder" data-image="story">
           <img src="./verines_site/Fotografias do Verine's/IMG-20261103-WA0037.jpg" alt="Livro de receitas do Verine's"
-            style="width:100%;height:100%;object-fit:contain;display:block;">
+            loading="lazy">
         </div>
 
       </div>
 
-      </div>
-
     </section>
-
-
 
     <section class="download-section" id="download">
 
       <div class="download-container">
 
-
-
         <div class="download-info">
 
-          <p class="download-subtitle">
-
-            SUA PRÓXIMA AVENTURA COMEÇA AQUI
-
-          </p>
-
-
+          <p class="download-subtitle">SUA PRÓXIMA AVENTURA COMEÇA AQUI</p>
 
           <h2>O Verine's espera por você!</h2>
 
+          <p>Ajude a reconstruir o restaurante, descubra histórias do passado e enfrente desafios nessa aventura cheia
+            de sabor.</p>
 
-
-          <p>
-
-            Ajude a reconstruir o restaurante, descubra
-
-            histórias do passado e enfrente desafios
-
-            nessa aventura cheia de sabor.
-
-          </p>
-
-
-
-          <div class="download-status" id="download-status">
-
-
-          </div>
-
-
+          <div class="download-status" id="download-status" role="status"></div>
 
           <a href="./verines_site/Verine'sGame.zip" class="download-button" id="download-button" aria-disabled="true">
-
-            <span>⬇</span> Baixar o jogo
-
+            <span aria-hidden="true">⬇</span> Baixar o jogo
           </a>
 
-
+          <p class="download-note" id="download-note"></p>
 
         </div>
 
-
-
         <div class="download-art">
 
-          <span class="download-icon">🎮</span>
+          <span class="download-icon" aria-hidden="true">🎮</span>
 
           <h3>Verine's</h3>
 
           <p>Um legado. Uma história. Um restaurante.</p>
 
-          <span class="download-version">JOGO PARA PC</span>
+          <span class="download-version" id="download-version">JOGO PARA PC</span>
 
         </div>
-
-
 
       </div>
 
     </section>
-
-
 
     <section class="development section-wrap" id="desenvolvimento">
 
@@ -339,11 +452,9 @@
           <h3>Aprender também pode ser uma aventura.</h3>
 
           <p>Verine's é um jogo educativo de gerenciamento de restaurante que propõe desafios matemáticos integrados à
-
             experiência de jogo, com uma narrativa sobre memória, família e recomeços.</p>
 
           <p>Este espaço poderá apresentar as etapas do desenvolvimento, as ferramentas utilizadas e os objetivos
-
             educacionais do projeto.</p>
 
         </article>
@@ -357,19 +468,15 @@
             <li><span class="avatar">A</span><span><b>Ana Clara</b><small>Equipe de desenvolvimento</small></span></li>
 
             <li><span class="avatar">C</span><span><b>Cauê Celestino</b><small>Equipe de desenvolvimento</small></span>
-
             </li>
 
-            <li><span class="avatar">G</span><span><b>Gabriel das Graças</b><small>Equipe de desenvolvimento</small></span>
-
-            </li>
+            <li><span class="avatar">G</span><span><b>Gabriel das Graças</b><small>Equipe de
+                  desenvolvimento</small></span></li>
 
             <li><span class="avatar">I</span><span><b>Isabella Bartu</b><small>Equipe de desenvolvimento</small></span>
-
             </li>
 
             <li><span class="avatar">I</span><span><b>Ivan Salerno</b><small>Equipe de desenvolvimento</small></span>
-
             </li>
 
           </ul>
@@ -378,9 +485,84 @@
 
       </div>
 
-      <div class="tech-strip"><span>DESENVOLVIDO COM</span><b>🎮 Godot</b><b>⌘ HTML · CSS · JavaScript</b><b>✎
+      <div class="tech-strip"><span>DESENVOLVIDO COM</span><b>🎮 Godot</b><b>⌘ HTML · CSS · JavaScript</b><b>⇄ API
+          REST (Node.js)</b><b>✎ Documentação</b></div>
 
-          Documentação</b></div>
+    </section>
+
+    <!-- ================= CONTATO (ViaCEP + POST /api/mensagens) ================= -->
+    <section class="contact-section" id="contato">
+
+      <div class="section-wrap contact-inner">
+
+        <div class="contact-copy">
+
+          <p class="eyebrow">FALE COM A EQUIPE</p>
+
+          <h2>Deixe seu recado<br>no balcão.</h2>
+
+          <p>Professor, estudante ou jogador: conte o que achou do Verine's ou peça para testar o jogo na sua escola.
+            Ao digitar o CEP, a cidade é preenchida automaticamente.</p>
+
+          <ul class="contact-stats" id="estatisticas-contato" aria-live="polite"></ul>
+
+        </div>
+
+        <form class="paper-card contact-form" id="form-contato" novalidate>
+
+          <div class="form-grid">
+            <label class="field" for="contato-nome"><span>Nome *</span>
+              <input id="contato-nome" name="nome" autocomplete="name" maxlength="60" required>
+              <small class="field-error" data-erro="nome"></small>
+            </label>
+
+            <label class="field" for="contato-email"><span>E-mail *</span>
+              <input id="contato-email" name="email" type="email" autocomplete="email" maxlength="120" required>
+              <small class="field-error" data-erro="email"></small>
+            </label>
+
+            <label class="field" for="contato-perfil"><span>Você é *</span>
+              <select id="contato-perfil" name="perfil" required>
+                <option value="">Selecione…</option>
+                <option>Estudante</option>
+                <option>Professor(a)</option>
+                <option>Jogador(a)</option>
+                <option>Outro</option>
+              </select>
+              <small class="field-error" data-erro="perfil"></small>
+            </label>
+
+            <label class="field" for="contato-cep"><span>CEP</span>
+              <input id="contato-cep" name="cep" inputmode="numeric" autocomplete="postal-code" maxlength="9"
+                placeholder="00000-000">
+              <small class="field-error" data-erro="cep"></small>
+            </label>
+
+            <label class="field" for="contato-cidade"><span>Cidade</span>
+              <input id="contato-cidade" name="cidade" autocomplete="address-level2" maxlength="60">
+            </label>
+
+            <label class="field" for="contato-uf"><span>UF</span>
+              <input id="contato-uf" name="uf" autocomplete="address-level1" maxlength="2">
+              <small class="field-error" data-erro="uf"></small>
+            </label>
+
+            <label class="field field-full" for="contato-mensagem"><span>Mensagem *</span>
+              <textarea id="contato-mensagem" name="mensagem" rows="4" maxlength="500" required></textarea>
+              <small class="field-help"><span id="contador-mensagem">0</span>/500 caracteres</small>
+              <small class="field-error" data-erro="mensagem"></small>
+            </label>
+          </div>
+
+          <div class="form-actions">
+            <button class="button" type="submit" id="btn-enviar-contato">Enviar mensagem</button>
+          </div>
+
+          <p class="feedback" id="contato-feedback" role="status"></p>
+
+        </form>
+
+      </div>
 
     </section>
 
@@ -396,19 +578,39 @@
 
     <div class="footer-bottom"><span>Projeto educacional · IFSP</span>
 
-      <div><a href="#sobre">Sobre</a><a href="#galeria">Galeria</a><a href="#desenvolvimento">Equipe</a></div><span>©
-
+      <div><a href="#sobre">Sobre</a><a href="#cozinha">Cozinha</a><a href="#galeria">Galeria</a><a
+          href="#desenvolvimento">Equipe</a><a href="#contato">Contato</a></div><span>©
         <span id="year"></span> Verine's</span>
 
     </div>
 
   </footer>
 
-  <dialog class="lightbox" aria-label="Imagem da galeria"><button class="lightbox-close"
-      aria-label="Fechar imagem">×</button><img src="" alt="Imagem ampliada"></dialog>
+  <!-- Monitor de APIs: mostra cada requisição feita pelo site (método, URL, status, tempo e resposta) -->
+  <button class="api-monitor-toggle" type="button" id="btn-monitor" aria-expanded="false"
+    aria-controls="monitor-api">⇄ APIs <span class="api-monitor-count" id="monitor-contador">0</span></button>
+
+  <aside class="api-monitor" id="monitor-api" aria-label="Monitor de requisições" hidden>
+    <div class="api-monitor-head">
+      <div>
+        <strong>Monitor de APIs</strong>
+        <small>Requisições feitas por esta página</small>
+      </div>
+      <button type="button" class="lightbox-close" id="btn-fechar-monitor" aria-label="Fechar monitor">×</button>
+    </div>
+    <ol class="api-monitor-list" id="monitor-lista"></ol>
+  </aside>
+
+  <dialog class="lightbox" aria-label="Imagem da galeria">
+    <button class="lightbox-close" type="button" aria-label="Fechar imagem">×</button>
+    <img src="" alt="Imagem ampliada">
+    <div class="lightbox-nav">
+      <button type="button" class="lightbox-arrow" data-direcao="-1" aria-label="Imagem anterior">‹</button>
+      <span class="lightbox-caption" aria-live="polite"></span>
+      <button type="button" class="lightbox-arrow" data-direcao="1" aria-label="Próxima imagem">›</button>
+    </div>
+  </dialog>
 
 </body>
-
-
 
 </html>
